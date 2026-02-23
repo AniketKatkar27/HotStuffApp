@@ -1,0 +1,17 @@
+# Visual Studio
+.vs/
+
+# Build folders
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+
+# Debug folders
+Debug/
+Release/
+
+# ASP.NET secrets
+appsettings.Development.json
