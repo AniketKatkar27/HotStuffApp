@@ -1,0 +1,11 @@
+﻿@model HotStuffApp.Models.Order
+
+<h2>Order Placed Successfully!</h2>
+
+<p>Order ID: @Model.OrderId</p>
+<p>Order Date: @Model.OrderDate</p>
+<p>Total Amount: ₹@Model.OrderTotal</p>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+    Back to Home
+</a>

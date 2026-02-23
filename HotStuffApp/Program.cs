@@ -1,29 +1,65 @@
+using HotStuffApp.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//
+// 1️⃣ Add Database Connection
+//
+builder.Services.AddDbContext<HotStuffAppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//
+// 2️⃣ Add MVC
+//
 builder.Services.AddControllersWithViews();
+
+//
+// 3️⃣ Add Cookie Authentication
+//
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromHours(2);
+    });
+
+//
+// 4️⃣ Add Authorization
+//
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//
+// 5️⃣ Middleware Pipeline
+//
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
 
+//
+// IMPORTANT ORDER
+//
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
+//
+// 6️⃣ Default Route
+//
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

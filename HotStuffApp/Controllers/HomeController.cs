@@ -1,25 +1,40 @@
-using HotStuffApp.Models;
+using HotStuffApp.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace HotStuffApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly HotStuffAppDbContext _context;
+
+        public HomeController(HotStuffAppDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var categories = _context.Categories.ToList();
+            return View(categories);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> ProductsByCategory(int id, string search)
         {
-            return View();
+            var products = _context.Products
+                .Where(p => p.CategoryId == id);
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                products = products
+                    .Where(p => p.ProductName.Contains(search));
+            }
+
+            ViewBag.CurrentCategory = id;
+
+            return View(await products.ToListAsync());
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

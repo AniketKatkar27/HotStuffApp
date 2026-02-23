@@ -1,0 +1,37 @@
+﻿@model HotStuffApp.Models.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+}
+
+<div class="card shadow-sm">
+    <div class="card-header bg-warning">
+        <h4>Edit Category</h4>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="CategoryId" />
+
+            <div class="mb-3">
+                <label asp-for="CategoryName" class="form-label"></label>
+                <input asp-for="CategoryName" class="form-control" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Update
+            </button>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Cancel
+            </a>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,12 @@
+﻿@model HotStuffApp.Models.User
+
+<h2>Register</h2>
+
+<form method="post">
+    <input asp-for="UserName" placeholder="Username" class="form-control mb-2" />
+    <input asp-for="Email" placeholder="Email" class="form-control mb-2" />
+    <input asp-for="Password" type="password" placeholder="Password" class="form-control mb-2" />
+    <button class="btn btn-success">Register</button>
+</form>
+
+<a asp-action="Login">Already have account? Login</a>

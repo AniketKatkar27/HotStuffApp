@@ -1,0 +1,36 @@
+﻿@model HotStuffApp.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="card shadow-sm">
+    <div class="card-header bg-info text-white">
+        <h4>Category Details</h4>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Product ID</dt>
+            <dd class="col-sm-9">@Model.ProductId</dd>
+
+            <dt class="col-sm-3">Product Name</dt>
+            <dd class="col-sm-9">@Model.ProductName</dd>
+
+            <dt class="col-sm-3">Product Price</dt>
+            <dd class="col-sm-9">@Model.ProductPrice</dd>
+
+            <dt class="col-sm-3">Category Name</dt>
+            <dd class="col-sm-9">@Model.Category.CategoryName</dd>
+        </dl>
+
+        <a asp-action="Edit" asp-route-id="@Model.CategoryId"
+           class="btn btn-warning">
+            Edit
+        </a>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Back
+        </a>
+    </div>
+</div>

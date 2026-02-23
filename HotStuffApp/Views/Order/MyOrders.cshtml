@@ -1,0 +1,20 @@
+﻿@model IEnumerable<HotStuffApp.Models.Order>
+
+<h2>My Orders</h2>
+
+<table class="table">
+    <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Total</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.OrderId</td>
+            <td>@item.OrderDate</td>
+            <td>₹@item.OrderTotal</td>
+        </tr>
+    }
+</table>

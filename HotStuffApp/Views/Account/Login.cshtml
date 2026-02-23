@@ -1,0 +1,14 @@
+﻿<h2>Login</h2>
+
+<form method="post">
+    <input name="username" placeholder="Username" class="form-control mb-2" />
+    <input name="password" type="password" placeholder="Password" class="form-control mb-2" />
+    <button class="btn btn-primary">Login</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <p class="text-danger">@ViewBag.Message</p>
+}
+
+<a asp-action="Register">New User? Register</a>

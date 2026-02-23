@@ -1,0 +1,49 @@
+﻿@model HotStuffApp.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="card shadow-sm">
+    <div class="card-header bg-warning">
+        <h4>Edit Product</h4>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="ProductId" />
+
+            <div class="mb-3">
+                <label asp-for="ProductName" class="form-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ProductPrice" class="form-label"></label>
+                <input asp-for="ProductPrice" class="form-control" />
+                <span asp-validation-for="ProductPrice" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Category.CategoryName" class="form-label"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Update
+            </button>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Cancel
+            </a>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
