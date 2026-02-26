@@ -1,0 +1,226 @@
+﻿@model IEnumerable<HotStuffApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="top-bar">
+    <h2>Food Products</h2>
+    <a asp-action="Create" class="create-btn">+ Add New Product</a>
+</div>
+
+<div class="product-container">
+
+    @if (!Model.Any())
+    {
+        <div class="empty-message">
+            <h4>No products available.</h4>
+        </div>
+    }
+
+    @foreach (var item in Model)
+    {
+        <div class="product-card">
+            <div class="image-wrapper">
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="~/images/@item.ImageUrl" alt="@item.ProductName" />
+                }
+                else
+                {
+                    <img src="~/images/no-image.png" alt="No Image" />
+                }
+            </div>
+
+            <div class="card-content">
+                <h3>@item.ProductName</h3>
+
+                <p class="price">
+                    @item.ProductPrice.ToString("C")
+                </p>
+
+                <p class="category">
+                    @item.Category?.CategoryName
+                </p>
+
+                <div class="card-buttons">
+                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn edit">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.ProductId" class="btn details">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn delete">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<style>
+
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 40px 10px 40px;
+    }
+
+        .top-bar h2 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+    /* GRID */
+    .product-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+        padding: 20px 40px;
+    }
+
+    /* CARD */
+    .product-card {
+        background: #ffffff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+    .image-wrapper {
+        height: 180px;
+        overflow: hidden;
+    }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+    .product-card:hover img {
+        transform: scale(1.1);
+    }
+
+    .card-content {
+        padding: 15px;
+        text-align: center;
+    }
+
+        .card-content h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+    .price {
+        font-size: 16px;
+        font-weight: 600;
+        color: #28a745;
+        margin-bottom: 5px;
+    }
+
+    .category {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 12px;
+    }
+
+    .card-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    .btn {
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        color: white;
+    }
+
+    .edit {
+        background-color: #007bff;
+    }
+
+    .details {
+        background-color: #17a2b8;
+    }
+
+    .delete {
+        background-color: #dc3545;
+    }
+
+    .edit:hover {
+        background-color: #0056b3;
+    }
+
+    .details:hover {
+        background-color: #117a8b;
+    }
+
+    .delete:hover {
+        background-color: #a71d2a;
+    }
+
+    /* CREATE BUTTON */
+    .create-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .create-btn:hover {
+            background-color: #1e7e34;
+        }
+
+    /* EMPTY MESSAGE */
+    .empty-message {
+        padding: 40px;
+        text-align: center;
+        grid-column: 1 / -1;
+    }
+
+    /* RESPONSIVE */
+    @@media (max-width: 1200px) {
+        .product-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @@media (max-width: 900px) {
+        .product-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media (max-width: 600px) {
+        .product-container {
+            grid-template-columns: 1fr;
+            padding: 15px;
+        }
+
+        .top-bar {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+
+</style>

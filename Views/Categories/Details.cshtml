@@ -1,0 +1,144 @@
+﻿@model HotStuffApp.Models.Category
+
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<div class="details-wrapper">
+    <div class="details-card">
+
+        <div class="image-section">
+            <img src="~/images/@Model.ImageUrl" alt="@Model.CategoryName" />
+        </div>
+
+        <div class="content-section">
+            <h2>@Model.CategoryName</h2>
+
+            <div class="info-row">
+                <span class="label">Category ID:</span>
+                <span>@Model.CategoryId</span>
+            </div>
+
+            <div class="button-group">
+                <a asp-action="Edit" asp-route-id="@Model.CategoryId" class="btn edit-btn">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.CategoryId" class="btn delete-btn">Delete</a>
+                <a asp-action="Index" class="btn back-btn">Back to Categories</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f4f6f9;
+    }
+
+    .details-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    .details-card {
+        background: #ffffff;
+        width: 850px;
+        max-width: 95%;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        display: flex;
+        flex-wrap: wrap;
+        transition: transform 0.3s ease;
+    }
+
+        .details-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .image-section {
+        flex: 1 1 350px;
+        height: 350px;
+        overflow: hidden;
+    }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .content-section {
+        flex: 1 1 400px;
+        padding: 30px;
+    }
+
+        .content-section h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+    .info-row {
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    .label {
+        font-weight: 600;
+        margin-right: 8px;
+        color: #555;
+    }
+
+    .button-group {
+        margin-top: 30px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    .edit-btn {
+        background-color: #007bff;
+    }
+
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+    .delete-btn {
+        background-color: #dc3545;
+    }
+
+        .delete-btn:hover {
+            background-color: #a71d2a;
+        }
+
+    .back-btn {
+        background-color: #6c757d;
+    }
+
+        .back-btn:hover {
+            background-color: #545b62;
+        }
+
+    @@media (max-width: 768px) {
+        .details-card {
+            flex-direction: column;
+        }
+
+        .image-section {
+            height: 250px;
+        }
+    }
+</style>

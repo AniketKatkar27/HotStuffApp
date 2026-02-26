@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="access-wrapper">
+    <div class="access-card">
+        <div class="icon">🚫</div>
+
+        <h1>403</h1>
+        <h2>Access Denied</h2>
+
+        <p>
+            You do not have permission to access this page.
+            Please contact the administrator if you believe this is a mistake.
+        </p>
+
+        <a asp-controller="Home" asp-action="Index" class="home-btn">
+            Go Back to Home
+        </a>
+    </div>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #ff4e50, #f9d423);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .access-wrapper {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .access-card {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 450px;
+        width: 100%;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .icon {
+        font-size: 50px;
+        margin-bottom: 10px;
+    }
+
+    .access-card h1 {
+        font-size: 60px;
+        margin: 10px 0;
+        color: #dc3545;
+    }
+
+    .access-card h2 {
+        margin-bottom: 15px;
+    }
+
+    .access-card p {
+        color: #555;
+        margin-bottom: 25px;
+    }
+
+    .home-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.3s ease;
+    }
+
+        .home-btn:hover {
+            background-color: #0056b3;
+        }
+
+    @@media (max-width: 500px) {
+        .access-card {
+            padding: 30px 20px;
+        }
+
+            .access-card h1 {
+                font-size: 45px;
+            }
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

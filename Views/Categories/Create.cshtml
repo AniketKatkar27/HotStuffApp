@@ -1,0 +1,163 @@
+﻿@model HotStuffApp.Models.Category
+
+@{
+    ViewData["Title"] = "Create Category";
+}
+
+<div class="create-page">
+    <div class="create-card">
+        <h2 class="page-title">Create New Category</h2>
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <!-- Category Name -->
+            <div class="form-group">
+                <label asp-for="CategoryName" class="form-label"></label>
+                <input asp-for="CategoryName" class="form-control" placeholder="Enter category name" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="form-group">
+                <label class="form-label">Upload Image</label>
+                <input type="file" name="imageFile" class="form-control file-input" accept="image/*" />
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group">
+                <button type="submit" class="btn save-btn">Save Category</button>
+                <a asp-action="Index" class="btn back-btn">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        background: #f4f6f9;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .create-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+    }
+
+    .create-card {
+        background: #ffffff;
+        width: 100%;
+        max-width: 500px;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+        .create-card:hover {
+            transform: translateY(-4px);
+        }
+
+    .page-title {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #444;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+        }
+
+    .file-input {
+        padding: 6px;
+        cursor: pointer;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 11px;
+        border-radius: 8px;
+        border: none;
+        text-decoration: none;
+        text-align: center;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .save-btn {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .save-btn:hover {
+            background-color: #1e7e34;
+        }
+
+    .back-btn {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .back-btn:hover {
+            background-color: #545b62;
+        }
+
+    .text-danger {
+        font-size: 13px;
+    }
+
+    .validation-summary {
+        color: #dc3545;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    @@media (max-width: 576px) {
+        .create-card {
+            padding: 30px;
+        }
+
+        .btn-group {
+            flex-direction: column;
+        }
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

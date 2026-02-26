@@ -1,0 +1,192 @@
+﻿@model HotStuffApp.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="details-wrapper">
+    <div class="details-card">
+
+        <!-- IMAGE SECTION -->
+        <div class="image-section">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="~/images/@Model.ImageUrl" alt="@Model.ProductName" />
+            }
+            else
+            {
+                <div class="no-image">No Image Available</div>
+            }
+        </div>
+
+        <!-- CONTENT SECTION -->
+        <div class="content-section">
+            <h2>@Model.ProductName</h2>
+
+            <div class="info-row">
+                <span class="label">Product ID:</span>
+                <span>@Model.ProductId</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Category:</span>
+                <span>@Model.Category?.CategoryName</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Price:</span>
+                <span class="price">@Model.ProductPrice.ToString("C")</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Description:</span>
+                <p class="description">
+                    @(string.IsNullOrWhiteSpace(Model.Description)
+                                        ? "No description provided." 
+                                                : Model.Description)
+                </p>
+            </div>
+
+            <div class="button-group">
+                <a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn edit-btn">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.ProductId" class="btn delete-btn">Delete</a>
+                <a asp-action="Index" class="btn back-btn">Back to Products</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f4f6f9;
+    }
+
+    .details-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    .details-card {
+        background: #ffffff;
+        width: 950px;
+        max-width: 95%;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        display: flex;
+        flex-wrap: wrap;
+        transition: transform 0.3s ease;
+    }
+
+        .details-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .image-section {
+        flex: 1 1 400px;
+        height: 400px;
+        overflow: hidden;
+        background: #f1f1f1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .no-image {
+        color: #888;
+        font-size: 18px;
+    }
+
+    .content-section {
+        flex: 1 1 450px;
+        padding: 30px;
+    }
+
+        .content-section h2 {
+            margin-bottom: 20px;
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+    .info-row {
+        margin-bottom: 18px;
+        font-size: 16px;
+    }
+
+    .label {
+        font-weight: 600;
+        margin-right: 8px;
+        color: #555;
+    }
+
+    .price {
+        font-size: 20px;
+        font-weight: 600;
+        color: #28a745;
+    }
+
+    .description {
+        margin-top: 5px;
+        color: #444;
+    }
+
+    .button-group {
+        margin-top: 30px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    .edit-btn {
+        background-color: #007bff;
+    }
+
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+    .delete-btn {
+        background-color: #dc3545;
+    }
+
+        .delete-btn:hover {
+            background-color: #a71d2a;
+        }
+
+    .back-btn {
+        background-color: #6c757d;
+    }
+
+        .back-btn:hover {
+            background-color: #545b62;
+        }
+
+    @@media (max-width: 768px) {
+        .details-card {
+            flex-direction: column;
+        }
+
+        .image-section {
+            height: 250px;
+        }
+    }
+</style>
