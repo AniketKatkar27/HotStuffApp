@@ -1,0 +1,132 @@
+﻿@model HotStuffApp.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <div class="card-body p-5">
+
+                    <!-- HEADER -->
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold">
+                            <i class="bi bi-bag-check me-2 text-primary"></i>
+                            Order #@Model.OrderId
+                        </h4>
+                    </div>
+
+                    <!-- STATUS BADGE -->
+                    <div class="text-center mb-4">
+                        @{
+                            string badgeClass = Model.Status.ToString() switch
+                            {
+                                        "Pending" => "bg-warning text-dark",
+                                        "Confirmed" => "bg-info text-dark",
+                                        "Shipped" => "bg-primary",
+                                        "Delivered" => "bg-success",
+                                        "Cancelled" => "bg-danger",
+                                _ => "bg-secondary"
+                            };
+                        }
+
+                        <span class="badge rounded-pill px-4 py-2 @badgeClass">
+                            @Model.Status
+                        </span>
+                    </div>
+
+                    <!-- ORDER SUMMARY -->
+                    <div class="row text-center mb-4">
+
+                        <div class="col-md-6">
+                            <p class="text-muted mb-1">Order Date</p>
+                            <h6 class="fw-semibold">
+                                @Model.OrderDate.ToString("dd MMM yyyy")
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="text-muted mb-1">Total Amount</p>
+                            <h6 class="fw-bold text-success fs-5">
+                                ₹ @Model.OrderTotal.ToString("N2")
+                            </h6>
+                        </div>
+
+                    </div>
+
+                    <hr />
+
+                    <!-- ORDER ITEMS -->
+                    <h5 class="fw-semibold text-center mb-4">
+                        Items in this Order
+                    </h5>
+
+                    <div class="table-responsive">
+                        <table class="table align-middle text-center">
+
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.OrderDetails)
+                                {
+                                    <tr>
+                                        <td class="fw-medium">
+                                            @item.ProductName
+                                        </td>
+
+                                        <td>
+                                            ₹ @item.ProductPrice.ToString("N2")
+                                        </td>
+
+                                        <td>
+                                            @item.Quantity
+                                        </td>
+
+                                        <td class="fw-semibold">
+                                            ₹ @(Math.Round(item.ProductPrice * item.Quantity, 2))
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <!-- GRAND TOTAL -->
+                    <div class="text-end mt-4">
+                        <h5 class="fw-bold">
+                            Grand Total:
+                            <span class="text-success">
+                                ₹ @Model.OrderTotal.ToString("N2")
+                            </span>
+                        </h5>
+                    </div>
+
+                    <!-- BACK BUTTON -->
+                    <div class="text-center mt-5">
+                        <a asp-action="AllOrders" asp-controller="Order"
+                           class="btn btn-outline-dark rounded-pill px-4">
+                            Back to My Orders
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

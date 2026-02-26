@@ -7,5 +7,7 @@
         public int TotalCategories { get; set; }
         public int TotalCustomers { get; set; }
         public decimal TotalRevenue { get; set; }
+
+        public List<Order>? RecentOrders { get; set; }
     }
 }

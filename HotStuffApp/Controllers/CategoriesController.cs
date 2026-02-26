@@ -1,46 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HotStuffApp.Data;
+﻿using HotStuffApp.Data;
 using HotStuffApp.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
-namespace HotSuffApp.Controllers
+namespace HotStuffApp.Controllers
 {
     [Authorize(Roles ="Admin")]
     public class CategoriesController : Controller
     {
         private readonly HotStuffAppDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CategoriesController(HotStuffAppDbContext context)
+        public CategoriesController(HotStuffAppDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            var categories = await _context.Categories.AsNoTracking().ToListAsync();
+            return View(categories);
         }
 
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var category = await _context.Categories
+            var category = await _context.Categories.AsNoTracking()
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+
+            if (category == null) return NotFound();
 
             return View(category);
         }
@@ -52,81 +46,115 @@ namespace HotSuffApp.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(Category category, IFormFile? imageFile)
+        //{
+        //    if (ModelState.IsValid)
+        //        return View(category);
+
+        //    if (imageFile != null)
+        //    {
+        //        category.ImageUrl = await SaveImageAsync(imageFile);
+        //    }
+
+        //        _context.Categories.Add(category);
+        //        await _context.SaveChangesAsync();
+
+        //    return RedirectToAction(nameof(Index));
+
+        //}
+        // ================= CREATE =================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
+        public async Task<IActionResult> Create(Category category, IFormFile? imageFile)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(category);
+
+            if (imageFile != null && imageFile.Length > 0)
             {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                category.ImageUrl = await SaveImageAsync(imageFile);
             }
-            return View(category);
+
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+            if (category == null) return NotFound();
+
             return View(category);
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, Category category, IFormFile? imageFile)
+        //{
+        //    if (id != category.CategoryId)
+        //        return NotFound();
+
+        //    if (ModelState.IsValid)
+        //        return View(category);
+
+        //    var existingCategory = await _context.Categories.FindAsync(id);
+        //    if (existingCategory == null) return NotFound();
+
+        //    existingCategory.CategoryName = category.CategoryName;
+
+        //    if (imageFile != null)
+        //    {
+        //        existingCategory.ImageUrl = await SaveImageAsync(imageFile);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+
+        //}
+        // ================= EDIT =================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
+        public async Task<IActionResult> Edit(int id, Category category, IFormFile? imageFile)
         {
-            if (ModelState.IsValid)
+            if (id != category.CategoryId)
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return View(category);
+
+            var existingCategory = await _context.Categories.FindAsync(id);
+            if (existingCategory == null)
+                return NotFound();
+
+            existingCategory.CategoryName = category.CategoryName;
+
+            if (imageFile != null && imageFile.Length > 0)
             {
-                try
-                {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.CategoryId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                existingCategory.ImageUrl = await SaveImageAsync(imageFile);
             }
-            return View(category);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+            var category = await _context.Categories.AsNoTracking()
+                .FirstOrDefaultAsync(c => c.CategoryId == id);
+
+            if (category == null) return NotFound();
 
             return View(category);
         }
@@ -137,18 +165,30 @@ namespace HotSuffApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
-            }
+            if (category == null)
+                return RedirectToAction(nameof(Index));
 
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        //Image Helper
+        private async Task<string> SaveImageAsync(IFormFile imageFile)
         {
-            return _context.Categories.Any(e => e.CategoryId == id);
+            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            string fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
+            string filePath = Path.Combine(uploadsFolder, fileName);
+
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await imageFile.CopyToAsync(stream);
+
+            return fileName;
         }
     }
 }

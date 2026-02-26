@@ -4,41 +4,71 @@
     ViewData["Title"] = "Edit Product";
 }
 
-<div class="card shadow-sm">
-    <div class="card-header bg-warning">
-        <h4>Edit Product</h4>
-    </div>
+<div class="edit-container">
+    <div class="edit-card">
 
-    <div class="card-body">
+        <h2 class="page-title">Edit Product</h2>
 
-        <form asp-action="Edit" method="post">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+
             <input type="hidden" asp-for="ProductId" />
 
-            <div class="mb-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+
+            <!-- Product Name -->
+            <div class="form-group">
                 <label asp-for="ProductName" class="form-label"></label>
                 <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
+                <span asp-validation-for="ProductName" class="text-danger small"></span>
             </div>
 
-            <div class="mb-3">
+            <!-- Description -->
+            <div class="form-group">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control textarea-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+
+            <!-- Price -->
+            <div class="form-group">
                 <label asp-for="ProductPrice" class="form-label"></label>
-                <input asp-for="ProductPrice" class="form-control" />
-                <span asp-validation-for="ProductPrice" class="text-danger"></span>
+                <input asp-for="ProductPrice" type="number" step="0.01" class="form-control" />
+                <span asp-validation-for="ProductPrice" class="text-danger small"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Category.CategoryName" class="form-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            <!-- Category -->
+            <div class="form-group">
+                <label asp-for="CategoryId" class="form-label"></label>
+                <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-control">
+                    <option value="0">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger small"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">
-                Update
-            </button>
+            <!-- Image Preview -->
+            <div class="form-group image-preview">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="~/images/@Model.ImageUrl" alt="Product Image" />
+                }
+                else
+                {
+                    <p class="no-image">No image uploaded</p>
+                }
+            </div>
 
-            <a asp-action="Index" class="btn btn-secondary">
-                Cancel
-            </a>
+            <!-- Change Image -->
+            <div class="form-group">
+                <label class="form-label">Change Image</label>
+                <input type="file" name="imageFile" class="form-control file-input" />
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button type="submit" class="btn update-btn">Update</button>
+                <a asp-action="Index" class="btn cancel-btn">Cancel</a>
+            </div>
+
         </form>
 
     </div>
@@ -47,3 +77,133 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    .edit-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        background-color: #f4f6f9;
+        min-height: 80vh;
+    }
+
+    .edit-card {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 550px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .page-title {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 26px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 6px;
+        color: #444;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        font-size: 14px;
+        transition: 0.2s ease;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.15);
+        }
+
+    .textarea-control {
+        min-height: 90px;
+        resize: vertical;
+    }
+
+    .file-input {
+        padding: 6px;
+        background-color: #f8f9fa;
+        cursor: pointer;
+    }
+
+    .image-preview {
+        text-align: center;
+    }
+
+        .image-preview img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #eee;
+            margin-bottom: 10px;
+        }
+
+    .no-image {
+        font-size: 14px;
+        color: #888;
+    }
+
+    .validation-summary {
+        margin-bottom: 15px;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 10px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+        text-align: center;
+    }
+
+    .update-btn {
+        background-color: #28a745;
+    }
+
+        .update-btn:hover {
+            background-color: #1e7e34;
+        }
+
+    .cancel-btn {
+        background-color: #6c757d;
+    }
+
+        .cancel-btn:hover {
+            background-color: #545b62;
+        }
+
+    @@media (max-width: 500px) {
+        .button-group {
+            flex-direction: column;
+        }
+    }
+</style>

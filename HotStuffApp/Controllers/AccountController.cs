@@ -2,12 +2,14 @@
 using HotStuffApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
 
 namespace HotStuffApp.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly HotStuffAppDbContext _context;
@@ -18,6 +20,7 @@ namespace HotStuffApp.Controllers
         }
 
         // REGISTER
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
@@ -25,6 +28,7 @@ namespace HotStuffApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public IActionResult Register(User user)
         {
            if(!ModelState.IsValid)
@@ -48,12 +52,14 @@ namespace HotStuffApp.Controllers
         }
 
         // LOGIN
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string username, string password)
         {
             var user = _context.Users
@@ -63,6 +69,7 @@ namespace HotStuffApp.Controllers
             {
                 var claims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Role, user.Role)
                 };
@@ -72,7 +79,14 @@ namespace HotStuffApp.Controllers
                 await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                return RedirectToAction("Index", "Home");
+                if (user.Role == "Admin")
+                {
+                    return RedirectToAction("Index", "AdminDashboard");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
             ViewBag.Message = "Invalid Username or Password";
@@ -90,5 +104,6 @@ namespace HotStuffApp.Controllers
         {
             return View();
         }
+
     }
 }

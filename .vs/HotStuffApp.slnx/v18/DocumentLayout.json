@@ -1,0 +1,160 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|c:\\users\\aniket\\desktop\\hotstuffapp\\hotstuffapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|solutionrelative:hotstuffapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|c:\\users\\aniket\\desktop\\hotstuffapp\\hotstuffapp\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|solutionrelative:hotstuffapp\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|c:\\users\\aniket\\desktop\\hotstuffapp\\hotstuffapp\\models\\orderdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|solutionrelative:hotstuffapp\\models\\orderdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|c:\\users\\aniket\\desktop\\hotstuffapp\\hotstuffapp\\data\\hotstuffappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|solutionrelative:hotstuffapp\\data\\hotstuffappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|c:\\users\\aniket\\desktop\\hotstuffapp\\hotstuffapp\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|solutionrelative:hotstuffapp\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|c:\\users\\aniket\\desktop\\hotstuffapp\\hotstuffapp\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|solutionrelative:hotstuffapp\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|c:\\users\\aniket\\desktop\\hotstuffapp\\hotstuffapp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D34182-EA96-18D3-AFD9-C50B25155C77}|HotStuffApp\\HotStuffApp.csproj|solutionrelative:hotstuffapp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HotStuffAppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Data\\HotStuffAppDbContext.cs",
+              "RelativeDocumentMoniker": "HotStuffApp\\Data\\HotStuffAppDbContext.cs",
+              "ToolTip": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Data\\HotStuffAppDbContext.cs",
+              "RelativeToolTip": "HotStuffApp\\Data\\HotStuffAppDbContext.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T08:39:26.836Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "HotStuffApp\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "HotStuffApp\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAuwEQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T08:02:43.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Program.cs",
+              "RelativeDocumentMoniker": "HotStuffApp\\Program.cs",
+              "ToolTip": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Program.cs",
+              "RelativeToolTip": "HotStuffApp\\Program.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAQwAsAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T08:02:13.038Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "HotStuffApp\\Models\\Category.cs",
+              "ToolTip": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Models\\Category.cs",
+              "RelativeToolTip": "HotStuffApp\\Models\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T07:15:06.606Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OrderDetail.cs",
+              "DocumentMoniker": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Models\\OrderDetail.cs",
+              "RelativeDocumentMoniker": "HotStuffApp\\Models\\OrderDetail.cs",
+              "ToolTip": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Models\\OrderDetail.cs",
+              "RelativeToolTip": "HotStuffApp\\Models\\OrderDetail.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T07:14:44.322Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "HotStuffApp\\Models\\Product.cs",
+              "ToolTip": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Models\\Product.cs",
+              "RelativeToolTip": "HotStuffApp\\Models\\Product.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T07:14:35.263Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Models\\User.cs",
+              "RelativeDocumentMoniker": "HotStuffApp\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\Aniket\\Desktop\\HotStuffApp\\HotStuffApp\\Models\\User.cs",
+              "RelativeToolTip": "HotStuffApp\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T07:14:09.416Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

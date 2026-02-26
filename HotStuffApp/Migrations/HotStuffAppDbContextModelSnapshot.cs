@@ -35,9 +35,50 @@ namespace HotStuffApp.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryName = "Pizza",
+                            ImageUrl = "pizza.jpg"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryName = "Burgers",
+                            ImageUrl = "burger.jpg"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryName = "Indian",
+                            ImageUrl = "indian.jpg"
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            CategoryName = "Chinese",
+                            ImageUrl = "chinese.jpg"
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            CategoryName = "Beverages",
+                            ImageUrl = "beverages.jpg"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            CategoryName = "Desserts",
+                            ImageUrl = "desserts.jpg"
+                        });
                 });
 
             modelBuilder.Entity("HotStuffApp.Models.Order", b =>
@@ -54,6 +95,9 @@ namespace HotStuffApp.Migrations
                     b.Property<decimal>("OrderTotal")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -61,7 +105,7 @@ namespace HotStuffApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("HotStuffApp.Models.OrderDetail", b =>
@@ -93,7 +137,7 @@ namespace HotStuffApp.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderDetails", (string)null);
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("HotStuffApp.Models.Product", b =>
@@ -107,6 +151,13 @@ namespace HotStuffApp.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -119,7 +170,225 @@ namespace HotStuffApp.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            CategoryId = 1,
+                            Description = "Classic cheese pizza",
+                            ImageUrl = "margherita.jpg",
+                            ProductName = "Margherita Pizza",
+                            ProductPrice = 299m
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            CategoryId = 1,
+                            Description = "Loaded with veggies",
+                            ImageUrl = "farmhouse.jpg",
+                            ProductName = "Farmhouse Pizza",
+                            ProductPrice = 399m
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            CategoryId = 1,
+                            Description = "Paneer & capsicum",
+                            ImageUrl = "paneer.jpg",
+                            ProductName = "Peppy Paneer",
+                            ProductPrice = 379m
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            CategoryId = 1,
+                            Description = "Loaded chicken pizza",
+                            ImageUrl = "chickenpizza.jpg",
+                            ProductName = "Chicken Dominator",
+                            ProductPrice = 449m
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            CategoryId = 2,
+                            Description = "Classic veg burger",
+                            ImageUrl = "vegburger.jpg",
+                            ProductName = "Veg Burger",
+                            ProductPrice = 149m
+                        },
+                        new
+                        {
+                            ProductId = 6,
+                            CategoryId = 2,
+                            Description = "Extra cheese delight",
+                            ImageUrl = "cheeseburger.jpg",
+                            ProductName = "Cheese Burger",
+                            ProductPrice = 179m
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            CategoryId = 2,
+                            Description = "Crispy chicken patty",
+                            ImageUrl = "chickenburger.jpg",
+                            ProductName = "Chicken Burger",
+                            ProductPrice = 199m
+                        },
+                        new
+                        {
+                            ProductId = 8,
+                            CategoryId = 2,
+                            Description = "Double layer burger",
+                            ImageUrl = "doubleburger.jpg",
+                            ProductName = "Double Patty Burger",
+                            ProductPrice = 249m
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            CategoryId = 3,
+                            Description = "Creamy tomato gravy",
+                            ImageUrl = "butterchicken.jpg",
+                            ProductName = "Butter Chicken",
+                            ProductPrice = 349m
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            CategoryId = 3,
+                            Description = "Rich paneer curry",
+                            ImageUrl = "paneerbutter.jpg",
+                            ProductName = "Paneer Butter Masala",
+                            ProductPrice = 299m
+                        },
+                        new
+                        {
+                            ProductId = 11,
+                            CategoryId = 3,
+                            Description = "Spicy chicken biryani",
+                            ImageUrl = "biryani.jpg",
+                            ProductName = "Hyderabadi Biryani",
+                            ProductPrice = 329m
+                        },
+                        new
+                        {
+                            ProductId = 12,
+                            CategoryId = 3,
+                            Description = "Yellow dal with tadka",
+                            ImageUrl = "daltadka.jpg",
+                            ProductName = "Dal Tadka",
+                            ProductPrice = 199m
+                        },
+                        new
+                        {
+                            ProductId = 13,
+                            CategoryId = 4,
+                            Description = "Stir fried noodles",
+                            ImageUrl = "noodles.jpg",
+                            ProductName = "Veg Hakka Noodles",
+                            ProductPrice = 199m
+                        },
+                        new
+                        {
+                            ProductId = 14,
+                            CategoryId = 4,
+                            Description = "Fried rice with chicken",
+                            ImageUrl = "friedrice.jpg",
+                            ProductName = "Chicken Fried Rice",
+                            ProductPrice = 229m
+                        },
+                        new
+                        {
+                            ProductId = 15,
+                            CategoryId = 4,
+                            Description = "Manchurian gravy balls",
+                            ImageUrl = "manchurian.jpg",
+                            ProductName = "Veg Manchurian",
+                            ProductPrice = 189m
+                        },
+                        new
+                        {
+                            ProductId = 16,
+                            CategoryId = 4,
+                            Description = "Crispy rolls",
+                            ImageUrl = "springroll.jpg",
+                            ProductName = "Spring Rolls",
+                            ProductPrice = 169m
+                        },
+                        new
+                        {
+                            ProductId = 17,
+                            CategoryId = 5,
+                            Description = "500ml chilled coke",
+                            ImageUrl = "coke.jpg",
+                            ProductName = "Coca Cola",
+                            ProductPrice = 60m
+                        },
+                        new
+                        {
+                            ProductId = 18,
+                            CategoryId = 5,
+                            Description = "Chilled coffee",
+                            ImageUrl = "coldcoffee.jpg",
+                            ProductName = "Cold Coffee",
+                            ProductPrice = 120m
+                        },
+                        new
+                        {
+                            ProductId = 19,
+                            CategoryId = 5,
+                            Description = "Refreshing lime soda",
+                            ImageUrl = "limesoda.jpg",
+                            ProductName = "Fresh Lime Soda",
+                            ProductPrice = 80m
+                        },
+                        new
+                        {
+                            ProductId = 20,
+                            CategoryId = 5,
+                            Description = "Fresh mango milkshake",
+                            ImageUrl = "mangoshake.jpg",
+                            ProductName = "Mango Shake",
+                            ProductPrice = 140m
+                        },
+                        new
+                        {
+                            ProductId = 21,
+                            CategoryId = 6,
+                            Description = "Hot chocolate brownie",
+                            ImageUrl = "brownie.jpg",
+                            ProductName = "Chocolate Brownie",
+                            ProductPrice = 149m
+                        },
+                        new
+                        {
+                            ProductId = 22,
+                            CategoryId = 6,
+                            Description = "Vanilla chocolate sundae",
+                            ImageUrl = "sundae.jpg",
+                            ProductName = "Ice Cream Sundae",
+                            ProductPrice = 129m
+                        },
+                        new
+                        {
+                            ProductId = 23,
+                            CategoryId = 6,
+                            Description = "Traditional Indian sweet",
+                            ImageUrl = "gulabjamun.jpg",
+                            ProductName = "Gulab Jamun",
+                            ProductPrice = 99m
+                        },
+                        new
+                        {
+                            ProductId = 24,
+                            CategoryId = 6,
+                            Description = "Creamy cheesecake slice",
+                            ImageUrl = "cheesecake.jpg",
+                            ProductName = "Cheesecake",
+                            ProductPrice = 179m
+                        });
                 });
 
             modelBuilder.Entity("HotStuffApp.Models.User", b =>
@@ -140,6 +409,10 @@ namespace HotStuffApp.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -152,7 +425,7 @@ namespace HotStuffApp.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("HotStuffApp.Models.Order", b =>

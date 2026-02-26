@@ -16,19 +16,17 @@ public class AdminDashboardController : Controller
 
     public IActionResult Index()
     {
-        var dashboard = new AdminDashboardVM();
+        var dashboard = new AdminDashboardVM
+        {
+            TotalOrders = _context.Orders.Count(),
+            TotalProducts = _context.Products.Count(),
+            TotalCategories = _context.Categories.Count(),
+            TotalCustomers = _context.Users.Count(u => u.Role == "Customer"),
+            TotalRevenue = _context.Orders.Sum(o => (decimal?)o.OrderTotal) ?? 0,
 
-        dashboard.TotalOrders = _context.Orders?.Count() ?? 0;
-        dashboard.TotalProducts = _context.Products?.Count() ?? 0;
-        dashboard.TotalCategories = _context.Categories?.Count() ?? 0;
-
-        dashboard.TotalCustomers = _context.Users.Count(u => u.Role == "Customer");
-
-
-        // Safe revenue calculation
-        dashboard.TotalRevenue = _context.Orders != null && _context.Orders.Any()
-            ? _context.Orders.Sum(o => o.OrderTotal)
-            : 0;
+            RecentOrders = _context.Orders.OrderByDescending(o => o.OrderDate).Take(5).ToList()
+        };
+        
 
 
         return View(dashboard);

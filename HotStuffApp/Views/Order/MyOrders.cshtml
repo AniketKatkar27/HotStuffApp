@@ -1,20 +1,92 @@
 ﻿@model IEnumerable<HotStuffApp.Models.Order>
 
-<h2>My Orders</h2>
+@{
+    ViewData["Title"] = "My Orders";
+}
 
-<table class="table">
-    <tr>
-        <th>Order ID</th>
-        <th>Date</th>
-        <th>Total</th>
-    </tr>
+<div class="container py-5">
 
-    @foreach (var item in Model)
+    <h2 class="fw-bold mb-4">
+        <i class="bi bi-bag-check me-2 text-primary"></i>
+        My Orders
+    </h2>
+
+    @if (Model != null && Model.Any())
     {
-        <tr>
-            <td>@item.OrderId</td>
-            <td>@item.OrderDate</td>
-            <td>₹@item.OrderTotal</td>
-        </tr>
+        <div class="row g-4">
+
+            @foreach (var order in Model)
+            {
+                <div class="col-12">
+                    <div class="card shadow-sm border-0 rounded-4">
+
+                        <div class="card-body">
+
+                            <div class="row align-items-center">
+
+                                <!-- Order Info -->
+                                <div class="col-md-3">
+                                    <p class="mb-1 text-muted">Order ID</p>
+                                    <h6 class="fw-semibold">#@order.OrderId</h6>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <p class="mb-1 text-muted">Date</p>
+                                    <h6 class="fw-semibold">
+                                        @order.OrderDate.ToString("dd MMM yyyy")
+                                    </h6>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <p class="mb-1 text-muted">Total</p>
+                                    <h6 class="fw-bold text-success">
+                                        ₹ @order.OrderTotal.ToString("N2")
+                                    </h6>
+                                </div>
+
+                                <div class="col-md-3 text-md-end">
+
+                                    @{
+                                        string badgeClass = order.Status.ToString() switch
+                                        {
+                                                            "Pending" => "bg-warning text-dark",
+                                                            "Confirmed" => "bg-info text-dark",
+                                                            "Shipped" => "bg-primary",
+                                                            "Delivered" => "bg-success",
+                                                            "Cancelled" => "bg-danger",
+                                            _ => "bg-secondary"
+                                        };
+                                    }
+
+                                    <span class="badge rounded-pill px-3 py-2 @badgeClass">
+                                        @order.Status
+                                    </span>
+
+                                    <div class="mt-3">
+                                        <a asp-action="OrderDetails"
+                                           asp-route-id="@order.OrderId"
+                                           class="btn btn-outline-dark btn-sm rounded-pill px-4">
+                                            View Details
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
     }
-</table>
+    else
+    {
+        <div class="text-center py-5">
+            <h5 class="text-muted">You have not placed any orders yet.</h5>
+        </div>
+    }
+
+</div>

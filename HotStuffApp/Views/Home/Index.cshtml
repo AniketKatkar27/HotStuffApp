@@ -5,36 +5,234 @@
 }
 
 <!-- HERO SECTION -->
-<div class="p-5 mb-4 bg-dark text-white rounded-3 shadow">
-    <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">Welcome to HotStuffApp 🔥</h1>
-        <p class="col-md-8 fs-4">
-            Fresh. Fast. Delicious.
-            Order your favourite food now!
+<div class="hero-section text-white text-center">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold">
+            Craving Something Amazing? 🍕🔥
+        </h1>
+
+        <p class="lead mt-3">
+            From sizzling pizzas to mouth-watering desserts —
+            your next favourite meal is just one click away.
+            <br />
+            Fast delivery. Fresh flavours. Zero compromise.
         </p>
     </div>
 </div>
 
-<h2 class="mb-4">Browse Categories</h2>
+<div class="container mt-5">
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-3 mb-4">
-            <div class="card shadow-lg border-0 h-100 text-center">
+    <h2 class="text-center mb-4 section-title">
+        What Are You In The Mood For Today? 😋
+    </h2>
 
-                <div class="card-body">
-                    <h5 class="card-title">@item.CategoryName</h5>
+    @{
+        var categories = Model.ToList();
+    }
 
-                    <a asp-controller="Home"
-                       asp-action="ProductsByCategory"
-                       asp-route-id="@item.CategoryId"
-                       class="btn btn-outline-dark mt-2">
-                        View Products
-                    </a>
+    <div class="row g-4" id="categoryContainer">
+
+        @for (int i = 0; i < categories.Count; i++)
+        {
+            var item = categories[i];
+
+            <div class="col-12 col-md-4 col-lg-3 category-item"
+                 data-index="@i"
+                 style="display:@(i < 4 ? "block" : "none")">
+
+                <div class="category-card h-100">
+
+                    <div class="image-wrapper">
+                        <img src="~/images/@item.ImageUrl"
+                             alt="@item.CategoryName" />
+                    </div>
+
+                    <div class="card-body text-center">
+                        <h5 class="fw-bold">@item.CategoryName</h5>
+
+                        <a asp-controller="Home"
+                           asp-action="ProductsByCategory"
+                           asp-route-id="@item.CategoryId"
+                           class="btn view-btn mt-2">
+                            View Products
+                        </a>
+                    </div>
+
                 </div>
-
             </div>
+        }
+    </div>
+
+    @if (categories.Count > 4)
+    {
+        <div class="text-center mt-4">
+            <button id="toggleBtn" class="btn show-more-btn">
+                Show More
+            </button>
         </div>
     }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const btn = document.getElementById("toggleBtn");
+            const cards = document.querySelectorAll(".category-item");
+
+            let visibleCount = 4;
+            const step = 4;
+            const total = cards.length;
+
+            if (!btn) return;
+
+            btn.addEventListener("click", function () {
+
+                if (visibleCount < total) {
+
+                    // Show next 4 cards
+                    let nextLimit = Math.min(visibleCount + step, total);
+
+                    for (let i = visibleCount; i < nextLimit; i++) {
+                        cards[i].style.display = "block";
+                        cards[i].classList.add("animate__animated", "animate__fadeInUp");
+                    }
+
+                    visibleCount = nextLimit;
+
+                    // If all shown → change button text
+                    if (visibleCount >= total) {
+                        btn.textContent = "Show Less";
+                    }
+
+                } else {
+
+                    // Collapse back to first 4
+                    for (let i = step; i < total; i++) {
+                        cards[i].style.display = "none";
+                    }
+
+                    visibleCount = step;
+                    btn.textContent = "Show More";
+
+                    // Smooth scroll to top of section
+                    document.getElementById("categoryContainer")
+                            .scrollIntoView({ behavior: "smooth" });
+                }
+            });
+        });
+    </script>
 </div>
+
+<style>
+
+    /* HERO SECTION */
+    .hero-section {
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        border-radius: 0 0 40px 40px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .section-title {
+        font-weight: 700;
+        font-size: 28px;
+        color: #333;
+    }
+
+    /* CATEGORY CARD */
+    .category-card {
+        background: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+        }
+
+    .image-wrapper {
+        height: 200px;
+        overflow: hidden;
+    }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+    .category-card:hover img {
+        transform: scale(1.15);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    /* BUTTON */
+    .view-btn {
+        background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+        .view-btn:hover {
+            background: linear-gradient(45deg, #ff4b2b, #ff416c);
+            transform: scale(1.05);
+            color: white;
+        }
+
+    .show-more-btn {
+        background: #333;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+        .show-more-btn:hover {
+            background: #000;
+            transform: scale(1.05);
+        }
+
+    /* RESPONSIVE */
+    @@media (max-width: 768px) {
+        .hero-section {
+            border-radius: 0 0 25px 25px;
+        }
+
+        .image-wrapper {
+            height: 180px;
+        }
+    }
+    /* Mobile */
+    @@media (max-width: 767px) {
+        .row.g-4 > div {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+    /* Tablet */
+    @@media (min-width: 768px) and (max-width: 991px) {
+        .row.g-4 > div {
+            flex: 0 0 33.333%;
+            max-width: 33.333%;
+        }
+    }
+
+    /* Desktop */
+    @@media (min-width: 992px) {
+        .row.g-4 > div {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+    }
+
+</style>

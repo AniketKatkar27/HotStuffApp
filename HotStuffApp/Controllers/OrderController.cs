@@ -2,10 +2,12 @@
 using HotStuffApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace HotStuffApp.Controllers
 {
@@ -69,9 +71,47 @@ namespace HotStuffApp.Controllers
             
             var user = _context.Users.FirstOrDefault(u => u.UserName ==userName);
 
-            var orders = _context.Orders.Where(o => o.UserId == user.UserId).ToList();
+            if (user == null)
+                return Unauthorized();
+
+            var orders = _context.Orders.Where(o => o.UserId == user.UserId).OrderByDescending(o => o.OrderDate).ToList();
 
             return View(orders);
         }
+
+        //Order Details
+        [Authorize]
+        public async Task<IActionResult> OrderDetails(int id)
+        {
+            // Get logged-in user id from claims
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            int userId = int.Parse(userIdClaim.Value);
+
+            // Load order with items BUT only if it belongs to this user
+            var order = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .FirstOrDefaultAsync(o => o.OrderId == id && o.UserId == userId);
+
+            if (order == null)
+                return NotFound();
+
+            return View(order);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AllOrders()
+        {
+            var orders = _context.Orders
+                .Include(o => o.User)
+                .OrderByDescending(o => o.OrderDate)
+                .ToList();
+
+            return View(orders);
+        }
+
     }
 }

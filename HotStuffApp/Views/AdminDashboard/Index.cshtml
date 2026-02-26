@@ -1,34 +1,154 @@
 ﻿@model HotStuffApp.Models.ViewModels.AdminDashboardVM
 
-<h2 class="mb-4">Admin Dashboard</h2>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
 
-<div class="row">
+<div class="container-fluid py-4">
 
-    <div class="col-md-3">
-        <div class="card bg-primary text-white p-3 mb-3">
-            <h5>Total Orders</h5>
-            <h3>@Model.TotalOrders</h3>
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">
+            <i class="bi bi-speedometer2 me-2 text-primary"></i>
+            Admin Dashboard
+        </h2>
+    </div>
+
+    <!-- ================= STAT CARDS ================= -->
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Total Orders</p>
+                    <h3 class="fw-bold text-primary">@Model.TotalOrders</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Total Revenue</p>
+                    <h3 class="fw-bold text-success">
+                        ₹ @Model.TotalRevenue.ToString("N2")
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Products</p>
+                    <h3 class="fw-bold text-warning">@Model.TotalProducts</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Customers</p>
+                    <h3 class="fw-bold text-info">@Model.TotalCustomers</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= QUICK ACTIONS ================= -->
+    <div class="card shadow-sm border-0 rounded-4 mt-5">
+        <div class="card-body">
+            <h5 class="fw-semibold mb-4">
+                <i class="bi bi-lightning-charge text-warning me-2"></i>
+                Quick Actions
+            </h5>
+
+            <div class="d-flex flex-wrap gap-3">
+
+                <a asp-controller="Categories" asp-action="Index"
+                   class="btn btn-primary rounded-pill px-4">
+                    <i class="bi bi-tags me-1"></i>
+                    Manage Categories
+                </a>
+
+                <a asp-controller="Products" asp-action="Index"
+                   class="btn btn-success rounded-pill px-4">
+                    <i class="bi bi-box-seam me-1"></i>
+                    Manage Products
+                </a>
+
+                <a asp-controller="AdminOrders" asp-action="Index"
+                   class="btn btn-warning rounded-pill px-4">
+                    <i class="bi bi-receipt me-1"></i>
+                    Manage Orders
+                </a>
+
+            </div>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="card bg-success text-white p-3 mb-3">
-            <h5>Total Revenue</h5>
-            <h3>₹ @Model.TotalRevenue</h3>
-        </div>
-    </div>
+    <!-- ================= RECENT ORDERS ================= -->
+    <div class="card shadow-sm border-0 rounded-4 mt-5">
+        <div class="card-body">
 
-    <div class="col-md-3">
-        <div class="card bg-warning text-white p-3 mb-3">
-            <h5>Total Products</h5>
-            <h3>@Model.TotalProducts</h3>
-        </div>
-    </div>
+            <h5 class="fw-semibold mb-4">
+                <i class="bi bi-clock-history text-secondary me-2"></i>
+                Recent Orders
+            </h5>
 
-    <div class="col-md-3">
-        <div class="card bg-dark text-white p-3 mb-3">
-            <h5>Total Categories</h5>
-            <h3>@Model.TotalCategories</h3>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecentOrders != null && Model.RecentOrders.Any())
+                        {
+                            foreach (var order in Model.RecentOrders)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">#@order.OrderId</td>
+                                    <td>@order.OrderDate.ToString("dd MMM yyyy")</td>
+                                    <td>₹ @order.OrderTotal.ToString("N2")</td>
+                                    <td>
+                                        @{
+                                            string badgeClass = order.Status.ToString() switch
+                                            {
+                                                                "Pending" => "bg-warning text-dark",
+                                                                "Confirmed" => "bg-info text-dark",
+                                                                "Shipped" => "bg-primary",
+                                                                "Delivered" => "bg-success",
+                                                                "Cancelled" => "bg-danger",
+                                                _ => "bg-secondary"
+                                            };
+                                        }
+
+                                        <span class="badge rounded-pill @badgeClass px-3 py-2">
+                                            @order.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    No recent orders found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 

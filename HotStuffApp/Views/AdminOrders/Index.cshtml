@@ -1,56 +1,124 @@
-﻿@using HotStuffApp.Models.Enums
+﻿@model IEnumerable<HotStuffApp.Models.Order>
 
-<h2>All Orders</h2>
+@{
+    ViewData["Title"] = "Manage Orders";
+}
 
-<table class="table">
-    <tr>
-        <th>Order ID</th>
-        <th>Date</th>
-        <th>Total</th>
-        <th>Action</th>
-        <th>Status</th>
-    </tr>
+<div class="container py-5">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.OrderId</td>
-            <td>@item.OrderDate</td>
-            <td>₹@item.OrderTotal</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-info btn-sm">
-                    View
-                </a>
+    <!-- HEADER -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">
+            <i class="bi bi-receipt-cutoff text-primary me-2"></i>
+            Manage Orders
+        </h2>
+        <p class="text-muted">View and manage all customer orders</p>
+    </div>
 
-                <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger btn-sm">
-                    Delete
-                </a>
+    <div class="card shadow-lg border-0 rounded-4">
 
-            </td>
+        <div class="card-body">
 
-            <td>
-                @if (item.Status == OrderStatus.Pending)
-                {
-                    <span class="badge bg-secondary">Pending</span>
-                }
-                else if (item.Status == OrderStatus.Preparing)
-                {
-                    <span class="badge bg-warning text-dark">Preparing</span>
-                }
-                else if (item.Status == OrderStatus.OutForDelivery)
-                {
-                    <span class="badge bg-info text-dark">Out For Delivery</span>
-                }
-                else if (item.Status == OrderStatus.Delivered)
-                {
-                    <span class="badge bg-success">Delivered</span>
-                }
-                else if (item.Status == OrderStatus.Cancelled)
-                {
-                    <span class="badge bg-danger">Cancelled</span>
-                }
-            </td>
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table align-middle text-center">
 
-        </tr>
-    }
-</table>
+                        <thead class="table-light">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th style="width:220px;">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var order in Model)
+                            {
+                                <tr>
+
+                                    <td class="fw-semibold">
+                                        #@order.OrderId
+                                    </td>
+
+                                    <td>
+                                        @order.User?.UserName
+                                    </td>
+
+                                    <td>
+                                        @order.OrderDate.ToString("dd MMM yyyy")
+                                    </td>
+
+                                    <td class="fw-bold text-success">
+                                        ₹ @order.OrderTotal.ToString("N2")
+                                    </td>
+
+                                    <!-- STATUS DROPDOWN -->
+                                    <td>
+                                        <form asp-action="ChangeStatus"
+                                              asp-route-id="@order.OrderId"
+                                              method="post"
+                                              class="d-flex justify-content-center">
+
+                                            <select name="status"
+                                                    class="form-select form-select-sm w-auto text-center me-2">
+                                                @foreach (var status in Enum.GetValues(typeof(HotStuffApp.Models.Enums.OrderStatus)))
+                                                {
+                                                    <option value="@status"
+                                                            selected="@(status.Equals(order.Status) ? "selected" : null)">
+                                                        @status
+                                                    </option>
+                                                }
+                                            </select>
+
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                                Update
+                                            </button>
+
+                                        </form>
+                                    </td>
+
+                                    <!-- ACTION BUTTONS -->
+                                    <td>
+                                        <div class="d-flex justify-content-center gap-2">
+
+                                            <a asp-controller="AdminOrders"
+                                               asp-action="Details"
+                                               asp-route-id="@order.OrderId"
+                                               class="btn btn-sm btn-outline-dark rounded-pill px-3">
+                                                View
+                                            </a>
+
+                                            <a asp-controller="AdminOrders"
+                                               asp-action="Delete"
+                                               asp-route-id="@order.OrderId"
+                                               class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                                Delete
+                                            </a>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <h5 class="text-muted">No orders found.</h5>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,11 +1,111 @@
 ﻿@model HotStuffApp.Models.Order
 
-<h2>Order Placed Successfully!</h2>
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
 
-<p>Order ID: @Model.OrderId</p>
-<p>Order Date: @Model.OrderDate</p>
-<p>Total Amount: ₹@Model.OrderTotal</p>
+<style>
+    .success-wrapper {
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-<a asp-controller="Home" asp-action="Index" class="btn btn-primary">
-    Back to Home
-</a>
+    .success-card {
+        background: #ffffff;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        width: 420px;
+        text-align: center;
+    }
+
+    .success-icon {
+        font-size: 50px;
+        color: green;
+        margin-bottom: 15px;
+    }
+
+    .order-details {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 0;
+    }
+
+    .total-row {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 2px solid #eee;
+    }
+
+    .btn-group-custom {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .btn-home {
+        background: #007bff;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+
+    .btn-status {
+        background: green;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+</style>
+
+<div class="success-wrapper">
+
+    <div class="success-card">
+
+        <div class="success-icon">✔</div>
+
+        <h3>Order Placed Successfully!</h3>
+
+        <div class="order-details">
+
+            <div class="detail-row">
+                <span>Order ID:</span>
+                <span>@Model.OrderId</span>
+            </div>
+
+            <div class="detail-row">
+                <span>Order Date:</span>
+                <span>@Model.OrderDate.ToString("dd MMM yyyy")</span>
+            </div>
+
+            <div class="detail-row total-row">
+                <span>Total Amount:</span>
+                <span>₹ @Model.OrderTotal</span>
+            </div>
+
+        </div>
+
+        <div class="btn-group-custom">
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn-home">
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,47 +1,168 @@
-﻿@model IEnumerable<HotStuffApp.Models.CartItem>
+﻿@model List<HotStuffApp.Models.CartItem>
 
-<h2>Your Cart</h2>
+@{
+    ViewData["Title"] = "Your Cart Items";
+    decimal grandTotal = Model.Sum(x => x.ProductPrice * x.Quantity);
+}
 
-<table class="table">
-    <tr>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
-        <th>Action</th>
-    </tr>
-
-    @{
-        decimal grandTotal = 0;
+<style>
+    .cart-wrapper {
+        max-width: 900px;
+        margin: 40px auto;
     }
 
-    @foreach (var item in Model)
-    {
-        var total = item.ProductPrice * item.Quantity;
-        grandTotal += total;
+    .cart-card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-        <tr>
-            <td>@item.ProductName</td>
-            <td>₹@item.ProductPrice</td>
-            <td>@item.Quantity</td>
-            <td>₹@total</td>
-            <td>
-                <a asp-controller="Cart"
-                   asp-action="RemoveFromCart"
-                   asp-route-id="@item.ProductId"
-                   class="btn btn-danger btn-sm">
-                    Remove
+    .cart-heading {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .cart-header,
+    .cart-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    .cart-header {
+        font-weight: bold;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .cart-row {
+        border-bottom: 1px solid #eee;
+    }
+
+    .qty-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .qty-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: none;
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+
+    .total-section {
+        text-align: right;
+        font-weight: bold;
+        padding-top: 15px;
+    }
+
+    .button-row {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .btn-primary-custom {
+        background: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+
+    .btn-success-custom {
+        background: green;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+</style>
+
+<div class="cart-wrapper">
+    <div class="cart-card">
+
+        <h2 class="cart-heading">Your Cart Items</h2>
+
+        @if (!Model.Any())
+        {
+            <p style="text-align:center;">Cart is empty.</p>
+            <div style="text-align:center;">
+                <a asp-controller="Home"
+                   asp-action="Products"
+                   class="btn-primary-custom">
+                    Add Products
                 </a>
-            </td>
-        </tr>
-    }
-</table>
+            </div>
+        }
+        else
+        {
+            <!-- HEADERS -->
+            <div class="cart-header">
+                <div>Item Name</div>
+                <div>Item Price</div>
+                <div>Item Quantity</div>
+                <div>Total Price</div>
+            </div>
 
-<h4>Grand Total: ₹@grandTotal</h4>
+            <!-- ITEMS -->
+            @foreach (var item in Model)
+            {
+                <div class="cart-row">
 
-<a asp-controller="Order"
-   asp-action="Checkout"
-   class="btn btn-success">
-    Place Order
-</a>
+                    <div>@item.ProductName</div>
 
+                    <div>₹ @item.ProductPrice</div>
+
+                    <div class="qty-box">
+                        <form asp-action="DecreaseQuantity" method="post">
+                            <input type="hidden" name="id" value="@item.ProductId" />
+                            <button type="submit" class="qty-btn">-</button>
+                        </form>
+
+                        <span>@item.Quantity</span>
+
+                        <form asp-action="IncreaseQuantity" method="post">
+                            <input type="hidden" name="id" value="@item.ProductId" />
+                            <button type="submit" class="qty-btn">+</button>
+                        </form>
+                    </div>
+
+                    <div>₹ @(item.ProductPrice* item.Quantity)</div>
+
+                </div>
+            }
+
+            <!-- LINE -->
+            <hr />
+
+            <!-- GRAND TOTAL -->
+            <div class="total-section">
+                Grand Total : ₹ @grandTotal
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="button-row">
+                <a asp-controller="Home"
+                   asp-action="Products"
+                   class="btn-primary-custom">
+                    Add More Items
+                </a>
+
+                <a asp-controller="Order"
+                   asp-action="Checkout"
+                   class="btn-success-custom">
+                    Proceed To Checkout
+                </a>
+            </div>
+        }
+
+    </div>
+</div>

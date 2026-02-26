@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace HotStuffApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Customer")]
     public class CartController : Controller
     {
         private readonly HotStuffAppDbContext _context;
@@ -44,7 +44,8 @@ namespace HotStuffApp.Controllers
                     ProductId = product.ProductId,
                     ProductName = product.ProductName,
                     ProductPrice = product.ProductPrice,
-                    Quantity = 1
+                    Quantity = 1,
+                    ImageUrl = product.ImageUrl
                 });
             }
 
@@ -71,18 +72,55 @@ namespace HotStuffApp.Controllers
 
         private List<CartItem> GetCart()
         {
-            var session = HttpContext.Session.GetString("Cart");
+            var sessionCart = HttpContext.Session.GetString("Cart");
 
-            if (session == null)
+            if (sessionCart == null)
                 return new List<CartItem>();
 
-            return JsonConvert.DeserializeObject<List<CartItem>>(session);
+            return JsonConvert.DeserializeObject<List<CartItem>>(sessionCart);
         }
 
         private void SaveCart(List<CartItem> cart)
         {
             HttpContext.Session.SetString("Cart",
                 JsonConvert.SerializeObject(cart));
+        }
+
+        [HttpPost]
+        public IActionResult IncreaseQuantity(int id)
+        {
+            var cart = GetCart();
+
+            var item = cart.FirstOrDefault(x => x.ProductId == id);
+
+            if (item != null)
+            {
+                item.Quantity++;
+            }
+
+            SaveCart(cart);   // VERY IMPORTANT
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult DecreaseQuantity(int id)
+        {
+            var cart = GetCart();
+
+            var item = cart.FirstOrDefault(x => x.ProductId == id);
+
+            if (item != null)
+            {
+                item.Quantity--;
+
+                if (item.Quantity <= 0)
+                    cart.Remove(item);
+            }
+
+            SaveCart(cart);   // VERY IMPORTANT
+
+            return RedirectToAction("Index");
         }
     }
 }

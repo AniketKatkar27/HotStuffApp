@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HotStuffApp.Models.Enums;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,20 +13,22 @@ namespace HotStuffApp.Models
         public int OrderId { get; set; }
 
         [Required]
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
+        [Range(0.01, 999999)]
         public decimal OrderTotal { get; set; }
+
+        [Required]
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;  // FIXED
 
         // Foreign Key to User
         [Required]
         public int UserId { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public User User { get; set; } = null!;
 
-        // Navigation
-        public List<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }
